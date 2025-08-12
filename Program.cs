@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using DelegatesIMP;
 using Pillars_OOPS;
 Console.WriteLine("Hello, World!");
 
@@ -12,7 +13,24 @@ Console.WriteLine("Hello, World!");
 //Shape<Rectangle> shape = new Shape<Rectangle>(rec);//assigning a Rectangle object to the Shape class
 //Console.WriteLine(shape.ShapeName); // Displaying the Rectangle object using its ToString method
 
-GenericQueueDemo();
+DelegateExample();
+static void DelegateExample()
+{
+    DelegateClass delegateClass = new DelegateClass();
+    CalcDelegate calcDelegate = new CalcDelegate(delegateClass.Sum);//assigning a sum method to the delegate
+
+    // Assigning methods to the delegate
+    calcDelegate += delegateClass.Multiply;
+    calcDelegate += delegateClass.Divide;
+    // Invoking the delegate with parameters
+    calcDelegate(10, 5);
+    //event 
+    delegateClass.Subscribe(message => Console.WriteLine($"Received Message: {message}"));
+    delegateClass.TriggerEvent("This is a test message after subsribing");
+    delegateClass.Unsubscribe(message => Console.WriteLine($"Received Message: {message}"));
+}
+
+//GenericQueueDemo();
 static void GenericQueueDemo()
 {
     // Create an instance of GenericQueue for Person objects
